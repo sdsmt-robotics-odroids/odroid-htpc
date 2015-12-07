@@ -1,0 +1,4 @@
+[Actions for kodi user]
+Identity=unix-user:kodi
+Action=org.freedesktop.devicekit.power.*;org.freedesktop.upower.*;org.freedesktop.consolekit.system.*;org.freedesktop.login1.*
+ResultAny=yes

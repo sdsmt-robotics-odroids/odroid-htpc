@@ -1,0 +1,13 @@
+[Unit]
+Description=Kodi standalone mode
+Conflicts=getty@tty1.service
+After=systemd-user-sessions.service getty@tty1.service plymouth-quit.service remote-fs.target lirc.service network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/xinit /usr/share/odroid-htpc/kodi.xinit -- :0 -nolisten tcp
+Restart=always
+
+[Install]
+WantedBy=htpc.target
+
