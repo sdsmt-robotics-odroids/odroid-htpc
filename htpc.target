@@ -2,7 +2,7 @@
 Description=Home Theather PC
 Documentation=man:systemd.special(7)
 Requires=multi-user.target
-After=multi-user.target
-Conflicts=rescue.target
+Conflicts=rescue.service rescue.target getty@tty1.service
+After=basic.target rescue.service rescue.target
 Wants=kodi.service
 AllowIsolate=yes

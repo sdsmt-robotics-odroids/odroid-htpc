@@ -1,1 +1,0 @@
-su kodi -c "/usr/bin/dbus-launch /usr/bin/kodi-standalone"

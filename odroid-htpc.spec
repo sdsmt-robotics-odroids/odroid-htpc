@@ -1,5 +1,5 @@
 Name:           odroid-htpc
-Version:        0.1.0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Configures an ODROID to act as an HTPC using KODI
 
@@ -9,7 +9,6 @@ URL:            http://hardkernel.com
 Source0:        kodi.service
 Source1:        htpc.target
 Source2:        kodi_shutdown.pkla
-Source3:        kodi.xinit
 
 BuildArch:      noarch
 
@@ -40,7 +39,6 @@ ln -sf /usr/lib/systemd/system/htpc.target /etc/systemd/system/default.target
 install -p -m0644 -D %{SOURCE0} %{buildroot}%{_unitdir}/kodi.service
 install -p -m0644 -D %{SOURCE1} %{buildroot}%{_unitdir}/htpc.target
 install -p -m0640 -D %{SOURCE2} %{buildroot}%{_sysconfdir}/polkit-1/localauthority/50-local.d/kodi_shutdown.pkla
-install -p -m0644 -D %{SOURCE3} %{buildroot}%{_datadir}/%{name}/kodi.xinit
 
 %pre
 getent group kodi >/dev/null || groupadd -r kodi
@@ -63,8 +61,10 @@ gpasswd -a kodi video >/dev/null
 %{_unitdir}/kodi.service
 %{_unitdir}/htpc.target
 %config(noreplace) %attr(0640, root, polkitd) %{_sysconfdir}/polkit-1/localauthority/50-local.d/kodi_shutdown.pkla
-%{_datadir}/%{name}/kodi.xinit
 
 %changelog
+* Tue Dec 08 2015 Scott K Logan <logans@cottsay.net> - 0.2.0-1
+- Remove xinit shenanigans
+
 * Sun Dec 06 2015 Scott K Logan <logans@cottsay.net> - 0.1.0-1
 - Initial package
