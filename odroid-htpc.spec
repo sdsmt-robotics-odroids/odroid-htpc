@@ -1,5 +1,5 @@
 Name:           odroid-htpc
-Version:        0.2.0
+Version:        0.2.1
 Release:        1%{?dist}
 Summary:        Configures an ODROID to act as an HTPC using KODI
 
@@ -63,6 +63,9 @@ gpasswd -a kodi video >/dev/null
 %config(noreplace) %attr(0640, root, polkitd) %{_sysconfdir}/polkit-1/localauthority/50-local.d/kodi_shutdown.pkla
 
 %changelog
+* Sat Dec 12 2015 Scott K Logan <logans@cottsay.net> - 0.2.1-1
+- Update kodi.service to use tty1
+
 * Tue Dec 08 2015 Scott K Logan <logans@cottsay.net> - 0.2.0-1
 - Remove xinit shenanigans
 
