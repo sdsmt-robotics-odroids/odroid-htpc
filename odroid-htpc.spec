@@ -1,7 +1,7 @@
 Name:           odroid-htpc
-Version:        0.2.2
+Version:        0.2.3
 Release:        1%{?dist}
-Summary:        Configures an ODROID to act as an HTPC using KODI
+Summary:        Configures an ODROID to act as an HTPC using Kodi
 
 Group:          Applications/Multimedia
 License:        BSD
@@ -9,14 +9,18 @@ URL:            http://hardkernel.com
 Source0:        kodi.service
 Source1:        htpc.target
 Source2:        kodi_shutdown.pkla
+Source3:        kodi.xml
+Source4:        htpc.xml
 
 BuildArch:      noarch
 
 BuildRequires:  systemd
+Requires:       dbus-x11
+Requires:       firewalld-filesystem
 Requires:       kodi
 Requires:       xorg-x11-xinit
-Requires:       dbus-x11
 Requires(pre):  shadow-utils
+Requires(post): firewalld-filesystem
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
@@ -39,6 +43,8 @@ ln -sf /usr/lib/systemd/system/htpc.target /etc/systemd/system/default.target
 install -p -m0644 -D %{SOURCE0} %{buildroot}%{_unitdir}/kodi.service
 install -p -m0644 -D %{SOURCE1} %{buildroot}%{_unitdir}/htpc.target
 install -p -m0640 -D %{SOURCE2} %{buildroot}%{_sysconfdir}/polkit-1/localauthority/50-local.d/kodi_shutdown.pkla
+install -p -m0644 -D %{SOURCE3} %{buildroot}%{_prefix}/lib/firewalld/services/kodi.xml
+install -p -m0644 -D %{SOURCE4} %{buildroot}%{_prefix}/lib/firewalld/zones/htpc.xml
 
 %pre
 getent group kodi >/dev/null || groupadd -r kodi
@@ -49,6 +55,7 @@ gpasswd -a kodi audio >/dev/null
 gpasswd -a kodi video >/dev/null
 
 %post
+%firewalld_reload
 %systemd_post kodi.service
 
 %preun
@@ -61,8 +68,13 @@ gpasswd -a kodi video >/dev/null
 %{_unitdir}/kodi.service
 %{_unitdir}/htpc.target
 %config(noreplace) %attr(0640, root, polkitd) %{_sysconfdir}/polkit-1/localauthority/50-local.d/kodi_shutdown.pkla
+%{_prefix}/lib/firewalld/services/kodi.xml
+%{_prefix}/lib/firewalld/zones/htpc.xml
 
 %changelog
+* Sun Oct 23 2016 Scott K Logan <logans@cottsay.net> - 0.2.3-1
+- Add firewalld service and zone
+
 * Sun Dec 27 2015 Scott K Logan <logans@cottsay.net> - 0.2.2-1
 - Switch away from tty1 because it disables shutdown/reboot buttons
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Kodi</short>
+  <description>Kodi is an award-winning free and open source (GPL) software media center for playing videos, music, pictures, games, and more.</description>
+  <port protocol="tcp" port="8080"/>
+  <port protocol="tcp" port="9090"/>
+  <port protocol="udp" port="9777"/>
+</service>

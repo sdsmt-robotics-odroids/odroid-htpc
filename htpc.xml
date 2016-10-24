@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>HTPC</short>
+  <description>For use in a private setting as a Home Theater PC.</description>
+  <service name="mdns"/>
+  <service name="dhcpv6-client"/>
+  <service name="http"/>
+  <service name="kodi"/>
+  <service name="samba-client"/>
+  <service name="ssh"/>
+  <masquerade/>
+  <forward-port protocol="tcp" to-port="8080" port="80"/>
+</zone>
